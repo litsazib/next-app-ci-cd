@@ -88,13 +88,13 @@ jobs:
           ls -a
           pm2 status
           # delete node-app process
-          pm2 delete my-next-app || true
+          pm2 delete myrunner || true
 
           # pm2 restart all
 
 
           # Create a Background process name node-app
-          pm2 start "npm start" --name="my-next-app"
+          pm2 start "npm start" --name="myrunner"
 
           # Save The Process List.
           pm2 save
