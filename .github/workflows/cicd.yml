@@ -1,0 +1,95 @@
+name: Next.JS Initial CICD pipeline
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  initialize:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the repo
+        uses: actions/checkout@v3
+
+      - name: Install Node Js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Install pakages
+        run: npm install
+
+  build:
+    needs: initialize
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the repo
+        uses: actions/checkout@v3
+
+      - name: Install Node Js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Install Dependencies
+        run: npm install  # <-- Add this step
+
+
+      - name: Build Next.js Project
+        run: |
+          npm run build
+          ls -la .next  # Verify if .next folder is created
+
+      - name: Ensure .next Directory Exists
+        run: |
+          if [ ! -d ".next" ]; then 
+            echo "Error: .next directory not found!";
+            exit 1;
+          fi
+
+      - name: Upload The Artiface
+        uses: actions/upload-artifact@v4
+        with:
+          name: nextjs-build-artifact
+          path: .next  # Next.js build directory    if-no-files-found: warn
+          compression-level: 6
+          overwrite: true
+          include-hidden-files: true
+
+  deploy:
+    needs: build
+    runs-on: self-hosted
+    steps:
+      - name: Checkout The Code
+        uses: actions/checkout@v3
+
+      - name: Receive The Artiface
+        uses: actions/download-artifact@v4
+        with:
+          name: nextjs-build-artifact
+
+      - name: Show The Artiface
+        run: |
+          ls -a
+
+      - name: Install The Package
+        run: npm install
+
+      - name: Run The Application By PM2
+        run: |
+          ls -a
+          pm2 status
+          # delete node-app process
+          pm2 delete my-next-app || true
+
+          # pm2 restart all
+
+
+          # Create a Background process name node-app
+          pm2 start "npm start" --name="my-next-app"
+
+          # Save The Process List.
+          pm2 save
