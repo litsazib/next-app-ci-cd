@@ -71,6 +71,13 @@ jobs:
         with:
           node-version: "22"
 
+      - name: Ensure PM2 is Installed
+        run: |
+          npm install -g pm2
+          export PATH=$(npm root -g)/pm2/bin:$PATH
+          echo 'export PATH=$HOME/.npm-global/bin:$PATH' >> ~/.bashrc
+          source ~/.bashrc
+
       - name: Receive The Artiface
         uses: actions/download-artifact@v4
         with:
