@@ -73,7 +73,7 @@ jobs:
 
       - name: Show The Artiface
         run: |
-          ls -a
+          ls -la
 
       - name: Install The Package
         run: npm install
