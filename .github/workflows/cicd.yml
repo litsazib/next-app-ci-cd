@@ -91,7 +91,9 @@ jobs:
       #     ls -la
 
       - name: Install The Package
-        run: npm install
+        run: |
+          npm install
+          npm run build
 
       - name: Run The Application By PM2
         run: |
