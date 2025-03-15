@@ -69,10 +69,10 @@ jobs:
       - name: Checkout The Code
         uses: actions/checkout@v3
 
-      - name: Install Node Js
-        uses: actions/setup-node@v4
-        with:
-          node-version: "22"
+      # - name: Install Node Js
+      #   uses: actions/setup-node@v4
+      #   with:
+      #     node-version: "22"
 
       - name: Ensure PM2 is Installed
         run: |
@@ -81,14 +81,14 @@ jobs:
           echo 'export PATH=$HOME/.npm-global/bin:$PATH' >> ~/.bashrc
           source ~/.bashrc
 
-      - name: Receive The Artiface
-        uses: actions/download-artifact@v4
-        with:
-          name: nextjs-build-artifact
+      # - name: Receive The Artiface
+      #   uses: actions/download-artifact@v4
+      #   with:
+      #     name: nextjs-build-artifact
 
-      - name: Show The Artiface
-        run: |
-          ls -la
+      # - name: Show The Artiface
+      #   run: |
+      #     ls -la
 
       - name: Install The Package
         run: npm install
