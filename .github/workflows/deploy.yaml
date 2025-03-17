@@ -21,8 +21,17 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Build Next.js
-        run: npm run build
+      - name: Build Next.js Project
+        run: |
+            npm run build
+            ls -la .next  # Verify if .next folder is created
+
+      - name: Ensure .next Directory Exists
+        run: |
+            if [ ! -d ".next" ]; then 
+            echo "Error: .next directory not found!";
+            exit 1;
+            fi
 
       - name: Upload build artifacts
         uses: actions/upload-artifact@v4
