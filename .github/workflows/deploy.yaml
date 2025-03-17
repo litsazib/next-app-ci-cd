@@ -44,7 +44,7 @@ jobs:
 
   deploy:
     runs-on: self-hosted  # Specify the self-hosted runner
-    needs: build  # Wait for the build job to completefdf
+    needs: build  # Wait for the build job to 
 
     steps:
       - name: Download build artifacts
