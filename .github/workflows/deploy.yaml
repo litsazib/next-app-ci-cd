@@ -29,6 +29,9 @@ jobs:
         with:
           name: nextjs-build
           path: .next  # Adjust according to your build output directory
+          compression-level: 6
+          overwrite: true
+          include-hidden-files: true
 
   deploy:
     runs-on: self-hosted  # Specify the self-hosted runner
