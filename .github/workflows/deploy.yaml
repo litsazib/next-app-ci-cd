@@ -1,0 +1,46 @@
+name: Deploy Next.js to Self-Hosted Runner
+
+on:
+  push:
+    branches:
+      - main  # Change this to your default branch
+
+jobs:
+  build:
+    runs-on: self-hosted  # Specify the self-hosted runner
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16'  # Specify your Node.js version
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build Next.js
+        run: npm run build
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: nextjs-build
+          path: .next  # Adjust according to your build output directory
+
+  deploy:
+    runs-on: self-hosted  # Specify the self-hosted runner
+    needs: build  # Wait for the build job to complete
+
+    steps:
+      - name: Download build artifacts
+        uses: actions/download-artifact@v2
+        with:
+          name: nextjs-build
+
+      - name: Deploy with PM2
+        run: |
+          npm install -g pm2
+          pm2 start npm --name "your-nextjs-app" -- run start  # Adjust according to your app's start command
