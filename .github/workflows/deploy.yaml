@@ -54,5 +54,5 @@ jobs:
 
       - name: Deploy with PM2
         run: |
-          npm install -g pm2
+          pm2 status
           pm2 start npm --name "your-nextjs-app" -- run start  # Adjust according to your app's start command
