@@ -55,5 +55,16 @@ jobs:
 
       - name: Deploy with PM2
         run: |
+          ls -a
           pm2 status
-          pm2 start npm --name "your-nextjs-app" -- run start  # Adjust according to your app's start command
+          # delete node-app process
+          pm2 delete next-app-deploy-runner || true
+
+          # pm2 restart all
+
+
+          # Create a Background process name node-app
+          pm2 start "npm start" --name="next-app-deploy-runner"
+
+          # Save The Process List.
+          pm2 save
