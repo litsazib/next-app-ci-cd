@@ -1,12 +1,12 @@
 name: Deploy Next.js to Self-Hosted Runner
 
-# on:
-#   workflow_dispatch: 
-
 on:
-  push:
-    branches:
-      - main  # Change this to your default branch
+  workflow_dispatch: 
+
+# on:
+#   push:
+#     branches:
+#       - main  # Change this to your default branch
 
 jobs:
   build:
