@@ -56,9 +56,10 @@ jobs:
         with:
           name: nextjs-build
 
-      - name: Deploy with PM2
+      - name: Deploy with PM2 and change directuory
         run: |
           ls -a
+          cd /home/ubuntu/actions-runner/_work/next-app-ci-cd/next-app-ci-cd
           pm2 status
           # delete node-app process
           pm2 delete next-app-deploy-runner || true
